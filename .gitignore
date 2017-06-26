@@ -1,0 +1,21 @@
+# dev environment
+.idea/*
+!.idea/inspectionProfiles/*.xml
+!.idea/runConfigurations/*.xml
+!.idea/codeStyleSettings.xml
+
+# runtime folders
+.store/
+.temp/
+.cache/
+
+# local configurations
+*.local.php
+*.local.ini
+*.env
+composer.lock
+
+# packages
+vendor/
+node_modules/
+
