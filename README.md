@@ -5,7 +5,7 @@ Crazy Factory default code styles to be used with Squizlabs' codesniffer.
 
 ## Install
 
-1) Copy phpcs.xml over to your project
+1) Copy `phpcs.xml` over to your project
 
 2) Run `composer require-dev squizlabs/php_codesniffer`
 
