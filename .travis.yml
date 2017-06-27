@@ -3,6 +3,7 @@ language: php
 matrix:
   include:
   - php: 5.3
+  - php: 7.1
   - php: nightly
 
   fast_finish: true
@@ -23,7 +24,7 @@ deploy:
     skip_cleanup: false
     on:
       tags: true
-      condition: "$TRAVIS_PHP_VERSION = 5.3"
+      condition: "$TRAVIS_PHP_VERSION = 7.1"
 
 cache:
   directories:
