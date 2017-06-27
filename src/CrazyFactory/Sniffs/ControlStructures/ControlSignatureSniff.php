@@ -10,11 +10,11 @@ class ControlSignatureSniff extends \PHP_CodeSniffer\Standards\PEAR\Sniffs\Contr
             'do {EOL...} while (...);EOL',
             'while (...) {EOL',
             'for (...) {EOL',
-            'if (...) {',
+            'if (...) {EOL',
             'foreach (...) {EOL',
             '}EOLelse if (...) {EOL',
             '}EOLelseif (...) {EOL',
-            '}EOLelse {',
+            '}EOLelse {EOL',
         ];
 
     }//end getPatterns()
