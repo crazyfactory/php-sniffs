@@ -1,10 +1,13 @@
 {
     "name": "crazyfactory/sniffs",
-    "description": "Crazy Factory default code styles to be used with Squizlabs' codesniffer.",
+    "description": "Crazy Factory default code styles to be used with Squizlabs' code sniffer.",
     "license": "proprietary",
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
     "autoload": {
         "psr-4": {
-            "CrazyFactory\\Sniffs\\": "src"
+            "CrazyFactory\\": "src"
         }
     }
 }
