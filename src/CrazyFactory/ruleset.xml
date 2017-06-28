@@ -1,12 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <ruleset name="CrazyFactory">
-
-    <file>./src/</file>
-    <file>./cron/</file>
-    <file>./pages/</file>
-    <file>./public/</file>
-    <file>./tests</file>
-    <file>./test</file>
+    <description>CrazyFactory Coding Standards</description>
 
     <!--The complete PSR-2 ruleset-->
     <rule ref="PSR2">
@@ -15,7 +9,7 @@
     </rule>
 
     <!-- Crazy Factory Custom Sniffs -->
-    <rule ref="./src/" />
+    <rule ref="./Sniffs/" />
 
     <!-- Arrays -->
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
@@ -46,6 +40,4 @@
             <property name="forbiddenFunctions" type="array" value="var_dump=>null,sizeof=>count,delete=>unset,print=>echo"/>
         </properties>
     </rule>
-
-
 </ruleset>
