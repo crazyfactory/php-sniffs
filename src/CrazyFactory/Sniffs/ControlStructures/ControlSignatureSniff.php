@@ -229,6 +229,11 @@ class ControlSignatureSniff implements Sniff
             break;
         }//end for
 
+        // Prevent undefined offset error
+        // This occur when character after closing brace is white space
+        if($next >= $phpcsFile->numTokens) {
+            return;
+        }
 
         if ($tokens[$next]['line'] === $tokens[$brace]['line']) {
             $error = 'Newline required after ' . $braceMsg;
