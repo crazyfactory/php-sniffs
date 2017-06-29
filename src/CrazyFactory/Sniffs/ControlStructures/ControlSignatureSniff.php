@@ -191,15 +191,15 @@ class ControlSignatureSniff implements Sniff
 
     }
 
-    public function requireNewLineAfterBrace($type, $curentToken, $tokens, File $phpcsFile)
+    public function requireNewLineAfterBrace($type, $currentToken, $tokens, File $phpcsFile)
     {
 
         if ($type === T_OPEN_CURLY_BRACKET) {
-            $brace = $curentToken['scope_opener'];
+            $brace = $currentToken['scope_opener'];
             $braceMsg = 'opening brace';
         }
         else if ($type === T_CLOSE_CURLY_BRACKET) {
-            $brace = $curentToken['scope_closer'];
+            $brace = $currentToken['scope_closer'];
             $braceMsg = 'closing brace';
         }
         else {
@@ -229,6 +229,11 @@ class ControlSignatureSniff implements Sniff
             break;
         }//end for
 
+        // Prevent undefined offset error
+        // This occur when character after closing brace is white space
+        if($next >= $phpcsFile->numTokens) {
+            return;
+        }
 
         if ($tokens[$next]['line'] === $tokens[$brace]['line']) {
             $error = 'Newline required after ' . $braceMsg;
