@@ -5,7 +5,7 @@
     <!--The complete PSR-2 ruleset-->
     <rule ref="PSR2">
         <!-- Exclude the one that we already have customized version -->
-        <exclude name="Squiz.ControlStructures"></exclude>
+        <exclude name="Squiz.ControlStructures.ControlSignature"></exclude>
     </rule>
 
     <!-- Crazy Factory Custom Sniffs -->
