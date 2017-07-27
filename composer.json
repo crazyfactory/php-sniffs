@@ -2,7 +2,7 @@
     "name": "crazyfactory/sniffs",
     "description": "Crazy Factory default code styles to be used with Squizlabs' code sniffer.",
     "license": "proprietary",
-    "require-dev": {
+    "require": {
         "symplify/easy-coding-standard": "^2.2.0"
     },
     "autoload": {
