@@ -129,10 +129,10 @@ class ControlSignatureSniff implements Sniff
                         }
 
                         $phpcsFile->fixer->endChangeset();
-                    }//end if
-                }//end if
-            }//end if
-        }//end if
+                    }
+                }
+            }
+        }
 
         // Single newline after opening and closing brace.
         if (isset($tokens[$stackPtr]['scope_opener']) === true) {
@@ -160,7 +160,7 @@ class ControlSignatureSniff implements Sniff
                     $phpcsFile->fixer->replaceToken(($closer + 1), '');
                 }
             }
-        }//end if
+        }
 
         // Only want to check multi-keyword structures from here on.
         if ($tokens[$stackPtr]['code'] === T_DO) {
@@ -185,15 +185,10 @@ class ControlSignatureSniff implements Sniff
                 return;
             }
         }
-        else {
-            return;
-        }//end if
-
     }
 
     public function requireNewLineAfterBrace($type, $currentToken, $tokens, File $phpcsFile)
     {
-
         if ($type === T_OPEN_CURLY_BRACKET) {
             $brace = $currentToken['scope_opener'];
             $braceMsg = 'opening brace';
@@ -227,7 +222,7 @@ class ControlSignatureSniff implements Sniff
             // We found the first bit of a code, or a comment on the
             // following line.
             break;
-        }//end for
+        }
 
         // Prevent undefined offset error
         // This occur when character after closing brace is white space
@@ -249,9 +244,10 @@ class ControlSignatureSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                $phpcsFile->fixer->addContent($brace, $phpcsFile->eolChar);
+                $spacer = str_repeat(' ', $currentToken['level'] * 4);
+                $phpcsFile->fixer->addContent($brace, $phpcsFile->eolChar . $spacer);
                 $phpcsFile->fixer->endChangeset();
             }
-        }//end if
+        }
     }
 }

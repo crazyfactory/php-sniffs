@@ -1,0 +1,61 @@
+# This file is the base coding standard configuration
+# Each project needs to have its own `easy-coding-standard.neon` file in the root path and include base standard like:
+#
+# includes:
+#   - vendor/crazyfactory/sniffs/easy-coding-standard.neon
+#
+
+# the checkers aka fixers.
+checkers:
+  # fixers with no args
+  - PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer
+  - PhpCsFixer\Fixer\LanguageConstruct\FunctionToConstantFixer
+  - PhpCsFixer\Fixer\Import\NoUnusedImportsFixer
+  - PhpCsFixer\Fixer\Import\OrderedImportsFixer
+  - PhpCsFixer\Fixer\Import\NoLeadingImportSlashFixer
+  - PhpCsFixer\Fixer\Whitespace\SingleBlankLineAtEofFixer
+  - PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer
+  - PhpCsFixer\Fixer\ArrayNotation\TrimArraySpacesFixer
+  - PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer
+  - PhpCsFixer\Fixer\Casing\LowercaseKeywordsFixer
+  - PhpCsFixer\Fixer\Casing\LowercaseConstantsFixer
+  - PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer
+  - PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer
+  - PhpCsFixer\Fixer\ClassNotation\NoBlankLinesAfterClassOpeningFixer
+  - PhpCsFixer\Fixer\ClassNotation\MethodSeparationFixer
+  - PhpCsFixer\Fixer\ClassNotation\NoPhp4ConstructorFixer
+  - PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer
+  - PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer # no more `$var{'key'}`
+  - PhpCsFixer\Fixer\CastNotation\NoShortBoolCastFixer # no more `!!$var` from legacy codes!
+  - PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer
+  - PhpCsFixer\Fixer\Basic\BracesFixer # placement of curly braces
+  - CrazyFactory\Sniffs\ControlStructures\ControlSignatureSniff
+  - PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions\ValidDefaultValueSniff
+
+  # fixers with simple args
+  PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer: { syntax: short }
+  PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff: { lineLimit: 120, absoluteLineLimit: 140 }
+  PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer: {
+    # can also add alongside return: switch, try, continue, break, throw, do, while, for, foreach
+    statements: [return, continue, break]
+  }
+
+  # fixers with complex args
+  PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff: {
+    forbiddenFunctions: {
+      var_dump: null
+      sizeof: count
+      delete: unset
+      print: echo
+      join: implode
+      split: explode
+      pos: current
+    }
+  }
+
+# global params
+parameters:
+  indentation: space
+  skip:
+    PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff:
+      - tests/**/*.php
