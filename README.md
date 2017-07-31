@@ -18,7 +18,7 @@ includes:
 
 ```
   "scripts": {
-    "lint": "ecs src cron tests --clear-cache",
-    "lint:fix": "ecs src cron tests --clear-cache --fix"
+    "lint": "ecs check src cron tests --clear-cache",
+    "lint:fix": "ecs check src cron tests --clear-cache --fix"
   }
 ```
