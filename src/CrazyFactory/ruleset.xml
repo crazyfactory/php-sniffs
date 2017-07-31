@@ -19,7 +19,7 @@
     <rule ref="Generic.Files.LineLength.TooLong">
         <exclude-pattern>./tests/*</exclude-pattern>
         <properties>
-            <property name="lineLimit" value="120" />
+            <property name="lineLimit" value="140" />
             <property name="absoluteLineLimit" value="140" />
         </properties>
     </rule>
