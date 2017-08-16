@@ -30,13 +30,13 @@ class UseInAlphabeticalOrderSniff implements Sniff
      *
      * @var array
      */
-    protected $_processed = [];
+    protected $processed = [];
     /**
      * The list of use statements, their content and scope.
      *
      * @var array
      */
-    protected $_uses = [];
+    protected $uses = [];
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -55,21 +55,21 @@ class UseInAlphabeticalOrderSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        if (isset($this->_processed[$phpcsFile->getFilename()])) {
+        if (isset($this->processed[$phpcsFile->getFilename()])) {
             return;
         }
 
-        $this->_uses = [];
+        $this->uses = [];
         $next = $stackPtr;
 
         while ($next !== false) {
-            $this->_checkUseToken($phpcsFile, $next);
+            $this->checkUseToken($phpcsFile, $next);
             $next = $phpcsFile->findNext(T_USE, $next + 1);
         }
 
         // Prevent multiple uses in the same file from entering
-        $this->_processed[$phpcsFile->getFilename()] = true;
-        foreach ($this->_uses as $scope => $used) {
+        $this->processed[$phpcsFile->getFilename()] = true;
+        foreach ($this->uses as $scope => $used) {
             $defined = $sorted = array_keys($used);
             natcasesort($sorted);
             $sorted = array_values($sorted);
@@ -95,10 +95,10 @@ class UseInAlphabeticalOrderSniff implements Sniff
      *
      * @return void
      */
-    protected function _checkUseToken(File $phpcsFile, $stackPtr)
+    private function checkUseToken(File $phpcsFile, $stackPtr)
     {
         // If the use token is for a closure we want to ignore it.
-        $isClosure = $this->_isClosure($phpcsFile, $stackPtr);
+        $isClosure = $this->isClosure($phpcsFile, $stackPtr);
 
         if ($isClosure) {
             return;
@@ -126,7 +126,7 @@ class UseInAlphabeticalOrderSniff implements Sniff
             $scope = key($token['conditions']);
         }
 
-        $this->_uses[$scope][$content] = 1;
+        $this->uses[$scope][$content] = 1;
     }
 
     /**
@@ -137,7 +137,7 @@ class UseInAlphabeticalOrderSniff implements Sniff
      *
      * @return bool
      */
-    protected function _isClosure(File $phpcsFile, $stackPtr)
+    private function isClosure(File $phpcsFile, $stackPtr)
     {
         return $phpcsFile->findPrevious(
             [T_CLOSURE],
