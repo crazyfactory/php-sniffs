@@ -201,7 +201,7 @@ class ControlSignatureSniff implements Sniff
      *
      * @throws \Exception
      */
-    public function requireNewLineAfterBrace($type, $currentToken, $tokens, File $phpcsFile)
+    private function requireNewLineAfterBrace($type, $currentToken, $tokens, File $phpcsFile)
     {
         if ($type === T_OPEN_CURLY_BRACKET) {
             $brace = $currentToken['scope_opener'];
