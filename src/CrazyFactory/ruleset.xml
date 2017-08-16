@@ -34,6 +34,13 @@
         <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
     </rule>
 
+    <!-- Enforce string concatenation to be surrounded by given spaces. -->
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1" />
+        </properties>
+    </rule>
+
     <!-- Disallow some function like var_dump -->
     <rule ref="Squiz.PHP.ForbiddenFunctions">
         <properties>
