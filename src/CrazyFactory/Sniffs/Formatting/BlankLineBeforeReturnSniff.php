@@ -62,6 +62,8 @@ class BlankLineBeforeReturnSniff implements Sniff
 
         if (isset($prevLineTokens[0])
             && ($prevLineTokens[0] == 'T_OPEN_CURLY_BRACKET' || $prevLineTokens[0] == 'T_DOC_COMMENT_CLOSE_TAG')
+            || in_array('T_CASE', $prevLineTokens)
+            || in_array('T_DEFAULT', $prevLineTokens)
         ) {
             return;
         }
