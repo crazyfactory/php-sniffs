@@ -57,6 +57,11 @@ class BlankLineBeforeReturnSniff implements Sniff
             ) {
                 $prevLineTokens[] = $tokens[$current]['type'];
             }
+
+            if ($current === 0) {
+                break;
+            }
+
             $current--;
         }
 
