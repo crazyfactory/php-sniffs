@@ -50,12 +50,16 @@ class BlankLineBeforeReturnSniff implements Sniff
         $previousLine    = $tokens[$stackPtr]['line'] - 1;
         $prevLineTokens  = [];
 
-        while ($current >= 0 && $tokens[$current]['line'] >= $previousLine) {
+        while ($tokens[$current]['line'] >= $previousLine) {
             if ($tokens[$current]['line'] == $previousLine
                 && $tokens[$current]['type'] != 'T_WHITESPACE'
                 && $tokens[$current]['type'] != 'T_COMMENT'
             ) {
                 $prevLineTokens[] = $tokens[$current]['type'];
+            }
+
+            if ($current === 0) {
+                break;
             }
 
             $current--;
