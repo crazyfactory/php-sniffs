@@ -64,7 +64,7 @@ class UnusedUseStatementSniff implements Sniff
         // Search where the class name is used. PHP treats class names case
         // insensitive, that's why we cannot search for the exact class name string
         // and need to iterate over all T_STRING tokens in the file.
-        $classUsed      = $phpcsFile->findNext(T_STRING, ($classPtr + 1));
+        $classUsed      = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE, T_DOC_COMMENT_STRING], ($classPtr + 1));
         $lowerClassName = strtolower($tokens[$classPtr]['content']);
 
         // Check if the referenced class is in the same namespace as the current
@@ -109,10 +109,19 @@ class UnusedUseStatementSniff implements Sniff
         }
 
         while ($classUsed !== false) {
-            if (strtolower($tokens[$classUsed]['content']) === $lowerClassName) {
+            // Get type hint in doc block. We also consider type hint as usage.
+            if($tokens[$classUsed]['code'] === T_DOC_COMMENT_STRING) {
+                $content = explode(' ', $tokens[$classUsed]['content'])[0];
+            }
+            else {
+                $content = $tokens[$classUsed]['content'];
+            }
+
+            if (strtolower($content) === $lowerClassName) {
                 // If the name is used in a PHP 7 function return type declaration
                 // stop.
-                if ($tokens[$classUsed]['code'] === T_RETURN_TYPE) {
+                if ($tokens[$classUsed]['code'] === T_RETURN_TYPE
+                || $tokens[$classUsed]['code'] === T_DOC_COMMENT_STRING) {
                     return;
                 }
 
@@ -138,7 +147,7 @@ class UnusedUseStatementSniff implements Sniff
                 }
             }
 
-            $classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE], ($classUsed + 1));
+            $classUsed = $phpcsFile->findNext([T_STRING, T_RETURN_TYPE, T_DOC_COMMENT_STRING], ($classUsed + 1));
         }
 
         $warning = 'Unused use statement';
@@ -158,40 +167,6 @@ class UnusedUseStatementSniff implements Sniff
                 }
 
                 $i++;
-            }
-
-            // Replace @var data types in doc comments with the fully qualified class
-            // name.
-            $useNamespacePtr = $phpcsFile->findNext([T_STRING], ($stackPtr + 1));
-            $useNamespaceEnd = $phpcsFile->findNext(
-                [T_NS_SEPARATOR, T_STRING],
-                ($useNamespacePtr + 1),
-                null,
-                true
-            );
-            $fullNamespace   = $phpcsFile->getTokensAsString(
-                $useNamespacePtr,
-                ($useNamespaceEnd - $useNamespacePtr)
-            );
-
-            $tag = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($stackPtr + 1));
-
-            while ($tag !== false) {
-                if (($tokens[$tag]['content'] === '@var' || $tokens[$tag]['content'] === '@return')
-                    && isset($tokens[($tag + 1)]) === true
-                    && $tokens[($tag + 1)]['code'] === T_DOC_COMMENT_WHITESPACE
-                    && isset($tokens[($tag + 2)]) === true
-                    && $tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING
-                    && strpos($tokens[($tag + 2)]['content'], $tokens[$classPtr]['content']) === 0
-                ) {
-                       $replacement = '\\'.$fullNamespace.substr(
-                           $tokens[($tag + 2)]['content'],
-                           strlen($tokens[$classPtr]['content'])
-                       );
-                       $phpcsFile->fixer->replaceToken(($tag + 2), $replacement);
-                }
-
-                      $tag = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($tag + 1));
             }
 
             $phpcsFile->fixer->endChangeset();
