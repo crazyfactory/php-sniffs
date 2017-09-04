@@ -16,7 +16,7 @@ before_script:
   - travis_retry composer update --prefer-dist
 
 script:
-  - echo "No tests implemented"
+  - vendor/bin/phpunit --testsuite=sniff_tests
 
 deploy:
     provider: script
