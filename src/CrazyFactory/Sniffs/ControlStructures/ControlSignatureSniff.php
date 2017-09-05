@@ -209,6 +209,10 @@ class ControlSignatureSniff implements Sniff
         }
         elseif ($type === T_CLOSE_CURLY_BRACKET) {
             $brace = $currentToken['scope_closer'];
+            // Make sure we make new lines only for closing curry bracket ( not endfor, endif, etc )
+            if($tokens[$brace]['code'] !== T_CLOSE_CURLY_BRACKET) {
+                return;
+            }
             $braceMsg = 'closing brace';
         }
         else {
@@ -246,7 +250,7 @@ class ControlSignatureSniff implements Sniff
 
         if ($tokens[$next]['line'] === $tokens[$brace]['line']) {
             $error = 'Newline required after ' . $braceMsg;
-            $fix = $phpcsFile->addFixableError($error, $brace, 'NewlineAfterOpenBrace');
+            $fix = $phpcsFile->addFixableError($error, $brace, 'NewlineAfterBrace');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($brace + 1); $i < $next; $i++) {
