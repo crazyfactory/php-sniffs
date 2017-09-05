@@ -210,7 +210,7 @@ class ControlSignatureSniff implements Sniff
         elseif ($type === T_CLOSE_CURLY_BRACKET) {
             $brace = $currentToken['scope_closer'];
             // Make sure we make new lines only for closing curry bracket ( not endfor, endif, etc )
-            if($tokens[$brace]['code'] !== T_CLOSE_CURLY_BRACKET) {
+            if ($tokens[$brace]['code'] !== T_CLOSE_CURLY_BRACKET) {
                 return;
             }
             $braceMsg = 'closing brace';

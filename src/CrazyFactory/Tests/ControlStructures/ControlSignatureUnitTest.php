@@ -17,7 +17,7 @@ class ControlSignatureUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='')
+    public function getErrorList($testFile = '')
     {
         return [
             5   => 1,
@@ -56,7 +56,6 @@ class ControlSignatureUnitTest extends AbstractSniffUnitTest
             195 => 1,
             208 => 1
         ];
-
     }//end getErrorList()
 
 
@@ -70,9 +69,6 @@ class ControlSignatureUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
-
+        return [];
     }//end getWarningList()
-
-
 }//end class
