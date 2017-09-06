@@ -1,0 +1,8 @@
+<?php
+
+use A\Ant;
+use A\Bat;
+use A\Cat;
+use B\Ant;
+use B\Bat;
+use B\Cat;
