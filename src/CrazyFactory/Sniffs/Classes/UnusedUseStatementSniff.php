@@ -110,7 +110,7 @@ class UnusedUseStatementSniff implements Sniff
 
         while ($classUsed !== false) {
             // Get type hint in doc block. We also consider type hint as usage.
-            if($tokens[$classUsed]['code'] === T_DOC_COMMENT_STRING) {
+            if ($tokens[$classUsed]['code'] === T_DOC_COMMENT_STRING) {
                 $content = explode(' ', $tokens[$classUsed]['content'])[0];
             }
             else {
