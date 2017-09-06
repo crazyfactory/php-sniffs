@@ -61,6 +61,7 @@ class UseInAlphabeticalOrderSniff implements Sniff
 
         $this->uses = [];
         $next = $stackPtr;
+        $tokens = $phpcsFile->getTokens();
 
         while ($next !== false) {
             $this->checkUseToken($phpcsFile, $next);
@@ -81,8 +82,33 @@ class UseInAlphabeticalOrderSniff implements Sniff
             foreach ($defined as $i => $name) {
                 if ($name !== $sorted[$i]) {
                     $error = 'Use classes must be in alphabetical order.';
-                    $phpcsFile->addError($error, $used[$name], 'UseInAlphabeticalOrder', []);
+                    $fix = $phpcsFile->addFixableError($error, $used[$name], 'UseInAlphabeticalOrder', []);
                 }
+            }
+
+            if (isset($fix) && $fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+
+                // Remove all old use statements
+                $semiColon = $stackPtr;
+                foreach ($defined as $i => $name) {
+                    $semiColon = $phpcsFile->findEndOfStatement($semiColon);
+                    for ($j = $stackPtr; $j <= $semiColon; $j++) {
+                        // Remain "Use" keyword because we will use it to insert new use statement
+                        if ($tokens[$j]['code'] !== T_USE && $tokens[$j]['content'] !== "\n") {
+                            $phpcsFile->fixer->replaceToken($j, '');
+                        }
+                    }
+                }
+
+                // Insert new use statements
+                $usePos = $phpcsFile->findNext(T_USE, $stackPtr);
+                foreach ($sorted as $name) {
+                    $phpcsFile->fixer->addContent($usePos, " {$name};");
+                    $usePos = $phpcsFile->findNext(T_USE, $usePos + 1);
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         }
     }
