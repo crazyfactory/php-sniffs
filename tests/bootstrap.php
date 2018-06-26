@@ -1,4 +1,7 @@
 <?php
+
+include_once __DIR__ . '/../vendor/squizlabs/php_codesniffer/tests/bootstrap.php';
+
 /**
  * Bootstrap file for running the tests on PHPCS 3.x.
  *
@@ -14,9 +17,6 @@
  * @license https://opensource.org/licenses/MIT MIT
  * @since   0.13.0
  */
-if ( ! defined( 'PHP_CODESNIFFER_IN_TESTS' ) ) {
-	define( 'PHP_CODESNIFFER_IN_TESTS', true );
-}
 
 $ds = DIRECTORY_SEPARATOR;
 

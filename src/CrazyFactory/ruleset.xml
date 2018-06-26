@@ -43,7 +43,7 @@
     </rule>
 
     <!-- Disallow some function like var_dump -->
-    <rule ref="Squiz.PHP.ForbiddenFunctions">
+    <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
             <property name="forbiddenFunctions" type="array" value="var_dump=>null,sizeof=>count,delete=>unset,print=>echo"/>
         </properties>
