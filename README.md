@@ -11,11 +11,11 @@ Crazy Factory default code styles to be used with Squizlabs' codesniffer.
 
 3) Run `composer require-dev squizlabs/php_codesniffer`
 
-4) Add a linting command to `composer.json`
+4) Add shortcuts to `composer.json`
 
 ```
   "scripts": {
-    "lint": "phpcs --standard=phpcs.xml",
-    "lint:fix": "phpcbf --standard=phpcs.xml"
+    "lint": "phpcs",
+    "lint:fix": "phpcbf"
   }
 ```
