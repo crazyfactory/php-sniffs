@@ -16,7 +16,7 @@
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 
     <!-- Long lines do no apply on test files -->
-    <rule ref="Generic.Files.LineLength.TooLong">
+    <rule ref="Generic.Files.LineLength">
         <exclude-pattern>./tests/*</exclude-pattern>
         <properties>
             <property name="lineLimit" value="140" />
