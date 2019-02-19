@@ -19,7 +19,7 @@ class UseInAlphabeticalOrderUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
             case 'UseInAlphabeticalOrderUnitTest.1.inc':
                 return [
-                    2 => 6
+                    2 => 7
                 ];
                 break;
             case 'UseInAlphabeticalOrderUnitTest.2.inc':

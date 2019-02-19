@@ -141,7 +141,7 @@ class UseInAlphabeticalOrderSniff implements Sniff
         $end = $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $stackPtr);
         $useTokens = array_slice($tokens, $stackPtr, $end - $stackPtr, true);
         foreach ($useTokens as $index => $token) {
-            if ($token['code'] === T_STRING || $token['code'] === T_NS_SEPARATOR) {
+            if (in_array($token['code'], [T_STRING, T_NS_SEPARATOR, T_WHITESPACE, T_AS])) {
                 $content .= $token['content'];
             }
         }

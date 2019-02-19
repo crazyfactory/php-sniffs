@@ -1,6 +1,7 @@
 <?php
 
 use A\Ant;
+use A\Ant as Z;
 use A\Bat;
 use A\Cat;
 use B\Ant;
