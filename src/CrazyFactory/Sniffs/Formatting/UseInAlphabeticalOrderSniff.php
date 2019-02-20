@@ -104,7 +104,7 @@ class UseInAlphabeticalOrderSniff implements Sniff
                 // Insert new use statements
                 $usePos = $phpcsFile->findNext(T_USE, $stackPtr);
                 foreach ($sorted as $name) {
-                    $phpcsFile->fixer->addContent($usePos, " {$name};");
+                    $phpcsFile->fixer->addContent($usePos, "{$name};");
                     $usePos = $phpcsFile->findNext(T_USE, $usePos + 1);
                 }
 
