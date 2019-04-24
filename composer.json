@@ -15,5 +15,8 @@
         "preferred-install": {
             "*": "dist"
         }
+    },
+    "scripts": {
+        "test": "phpunit -c phpunit.xml"
     }
 }
