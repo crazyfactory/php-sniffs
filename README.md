@@ -1,21 +1,24 @@
 php-codestyles
 =======
 
-Crazy Factory default code styles to be used with Squizlabs' codesniffer.
+Crazy Factory default code styles to be used with Squizlabs' codesniffer and PHPCSFixer.
 
 ## Install
 
-1) Copy `phpcs.example.xml` over to your project and rename it to `phpcs.xml`
+1) Create a file `easy-coding-standard.neon` in the root path of project with at least below contents:
+```yml
+includes:
+  - vendor/crazyfactory/sniffs/easy-coding-standard.neon
 
-2) Remove the `<file>` tag that does not exist in your project.
+```
 
-3) Run `composer require-dev squizlabs/php_codesniffer`
+2) Run `composer require-dev crazyfactory/sniffs`
 
-4) Add shortcuts to `composer.json`
+43 Add a linting command to `composer.json`
 
 ```
   "scripts": {
-    "lint": "phpcs",
-    "lint:fix": "phpcbf"
+    "lint": "ecs check src cron tests --clear-cache",
+    "lint:fix": "ecs check src cron tests --clear-cache --fix"
   }
 ```
