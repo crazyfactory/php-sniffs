@@ -16,10 +16,10 @@
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 
     <!-- Long lines do no apply on test files -->
-    <rule ref="Generic.Files.LineLength.TooLong">
+    <rule ref="Generic.Files.LineLength">
         <exclude-pattern>./tests/*</exclude-pattern>
         <properties>
-            <property name="lineLimit" value="120" />
+            <property name="lineLimit" value="140" />
             <property name="absoluteLineLimit" value="140" />
         </properties>
     </rule>
@@ -34,8 +34,16 @@
         <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
     </rule>
 
+    <!-- Enforce string concatenation to be surrounded by given spaces. -->
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1" />
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+
     <!-- Disallow some function like var_dump -->
-    <rule ref="Squiz.PHP.ForbiddenFunctions">
+    <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
             <property name="forbiddenFunctions" type="array" value="var_dump=>null,sizeof=>count,delete=>unset,print=>echo"/>
         </properties>

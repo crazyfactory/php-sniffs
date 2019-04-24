@@ -1,7 +1,5 @@
 <?php
-
 namespace CrazyFactory\Sniffs\ControlStructures;
-
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -39,9 +37,14 @@ class ControlSignatureSniff implements Sniff
             T_ELSEIF,
             T_SWITCH,
         ];
-
     }
 
+    /**
+     * @param File $phpcsFile
+     * @param int  $stackPtr
+     *
+     * @return int|void
+     */
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
@@ -55,7 +58,7 @@ class ControlSignatureSniff implements Sniff
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $found = 0;
         }
-        else if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
+        elseif ($tokens[($stackPtr + 1)]['content'] !== ' ') {
             if (strpos($tokens[($stackPtr + 1)]['content'], $phpcsFile->eolChar) !== false) {
                 $found = 'newline';
             }
@@ -139,7 +142,7 @@ class ControlSignatureSniff implements Sniff
             $this->requireNewLineAfterBrace(T_OPEN_CURLY_BRACKET, $tokens[$stackPtr], $tokens, $phpcsFile);
             $this->requireNewLineAfterBrace(T_CLOSE_CURLY_BRACKET, $tokens[$stackPtr], $tokens, $phpcsFile);
         }
-        else if ($tokens[$stackPtr]['code'] === T_WHILE) {
+        elseif ($tokens[$stackPtr]['code'] === T_WHILE) {
             // Zero spaces after parenthesis closer.
             $closer = $tokens[$stackPtr]['parenthesis_closer'];
             $found = 0;
@@ -168,7 +171,7 @@ class ControlSignatureSniff implements Sniff
                 return;
             }
         }
-        else if ($tokens[$stackPtr]['code'] === T_ELSE
+        elseif ($tokens[$stackPtr]['code'] === T_ELSE
             || $tokens[$stackPtr]['code'] === T_ELSEIF
             || $tokens[$stackPtr]['code'] === T_CATCH
         ) {
@@ -187,14 +190,26 @@ class ControlSignatureSniff implements Sniff
         }
     }
 
-    public function requireNewLineAfterBrace($type, $currentToken, $tokens, File $phpcsFile)
+    /**
+     * @param      $type
+     * @param      $currentToken
+     * @param      $tokens
+     * @param File $phpcsFile
+     *
+     * @throws \Exception
+     */
+    private function requireNewLineAfterBrace($type, $currentToken, $tokens, File $phpcsFile)
     {
         if ($type === T_OPEN_CURLY_BRACKET) {
             $brace = $currentToken['scope_opener'];
             $braceMsg = 'opening brace';
         }
-        else if ($type === T_CLOSE_CURLY_BRACKET) {
+        elseif ($type === T_CLOSE_CURLY_BRACKET) {
             $brace = $currentToken['scope_closer'];
+            // Make sure we make new lines only for closing curry bracket ( not endfor, endif, etc )
+            if ($tokens[$brace]['code'] !== T_CLOSE_CURLY_BRACKET) {
+                return;
+            }
             $braceMsg = 'closing brace';
         }
         else {
@@ -226,13 +241,13 @@ class ControlSignatureSniff implements Sniff
 
         // Prevent undefined offset error
         // This occur when character after closing brace is white space
-        if($next >= $phpcsFile->numTokens) {
+        if ($next >= $phpcsFile->numTokens) {
             return;
         }
 
         if ($tokens[$next]['line'] === $tokens[$brace]['line']) {
             $error = 'Newline required after ' . $braceMsg;
-            $fix = $phpcsFile->addFixableError($error, $brace, 'NewlineAfterOpenBrace');
+            $fix = $phpcsFile->addFixableError($error, $brace, 'NewlineAfterBrace');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($brace + 1); $i < $next; $i++) {
