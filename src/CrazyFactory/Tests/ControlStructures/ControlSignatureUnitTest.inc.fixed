@@ -226,7 +226,7 @@ if (1 === $a) :
     if ($b) {
         echo 'b';
     }
-else {
+    else {
         echo 'not b';
     }
 else :
