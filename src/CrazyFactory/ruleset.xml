@@ -41,6 +41,11 @@
             <property name="ignoreNewlines" value="true" />
         </properties>
     </rule>
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing" >
+        <properties>
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
 
     <!-- Disallow some function like var_dump -->
     <rule ref="Generic.PHP.ForbiddenFunctions">
