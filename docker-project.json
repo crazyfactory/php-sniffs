@@ -1,0 +1,33 @@
+{
+  "file": "./docker-compose.yml",
+  "service": "php-sniff-php-fpm",
+  "command": "composer %args%",
+  "actions": {
+    "install": {
+      "command": "composer %action% %args%",
+      "user": "www-data"
+    },
+    "update": {
+      "command": "composer %action% %args%",
+      "user": "www-data"
+    },
+    "php": {
+      "command": "php %args%",
+      "user": "www-data"
+    },
+    "bash": {
+      "user": "www-data"
+    },
+    "bash:root": {
+      "command": ["bash"],
+      "user": "root"
+    },
+    "start:dev": {
+      "service": "@host",
+      "command": [
+        "docker-compose build",
+        "docker-compose up -d"
+      ]
+    }
+  }
+}

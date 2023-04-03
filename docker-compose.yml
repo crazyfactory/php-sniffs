@@ -1,0 +1,52 @@
+version: '3.4'
+
+services:
+  php-sniff-php-fpm:
+    container_name: php-sniff-php-fpm
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+      target: debugging
+    ports:
+      - "30112:80"
+    volumes:
+      - ./:/var/www/project
+    environment:
+      IN_DOCKER: 1
+
+      PHP_INI_UPLOAD_MAX_FILESIZE: 100M
+      PHP_INI_POST_MAX_SIZE: 108M
+      PHP_INI_MAX_FILE_UPLOADS: 200
+      INI_EXPOSE_PHP: 0
+
+      INI_MAX_EXECUTION_TIME: 0
+      INI_MEMORY_LIMIT: 2G
+
+      INI_ERROR_LOG: .debug/php-errors.log
+      INI_LOG_ERRORS: 1
+      INI_DISPLAY_ERRORS: "E_ALL & ~E_DEPRECATED & ~E_NOTICE"
+      INI_DISPLAY_STARTUP_ERRORS: 1
+      INI_ERROR_REPORTING: 1
+      INI_HTML_ERRORS: 0
+
+      # https://xdebug.org/docs/all_settings#mode
+      # INI_XDEBUG_MODE=off,debug,profile,trace - EG - Enables step debugger, profiling and tracing
+      INI_XDEBUG_MODE: "debug"
+      INI_XDEBUG_HOST: host.docker.internal
+      INI_XDEBUG_PORT: 9000
+      INI_IDEKEY: PHPSTORM
+      INI_XDEBUG_OUTPUT_DIR: "/var/www/project/.debug"
+      INI_XDEBUG_DISCOVER_CLIENT_HOST: 1
+      INI_XDEBUG_CLI_COLOR: 1
+      INI_XDEBUG_START_WITH_REQUEST: 1
+
+      INI_XDEBUG_LOG: "/var/www/project/.debug/remote.log"
+      INI_XDEBUG_LOG_LEVEL: 7
+
+      INI_XDEBUG_TRACE_FORMAT: 0
+      INI_XDEBUG_TRACE_OUTPUT_NAME: "trace.%t-%s"
+
+      INI_XDEBUG_PROFILER_APPEND: 0
+      INI_XDEBUG_PROFILER_OUTPUT_NAME: "cachegrind.out.%t-%s"
+
+      PHP_IDE_CONFIG: "serverName=php-sniff-php-fpm"
