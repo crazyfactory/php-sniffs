@@ -59,9 +59,6 @@ return ECSConfig::configure()
         // NoExtraConsecutiveBlankLinesFixer (php-cs-fixer 2.x) => NoExtraBlankLinesFixer
         NoExtraBlankLinesFixer::class,
         BracesFixer::class,
-        // keep "else/elseif/catch" on the next line, as the old php-cs-fixer 2.x
-        // BracesFixer did and as CrazyFactory ControlSignatureSniff requires
-        ControlStructureContinuationPositionFixer::class,
         // sniffs
         ControlSignatureSniff::class,
         ValidDefaultValueSniff::class,
@@ -84,6 +81,7 @@ return ECSConfig::configure()
     ->withConfiguredRule(BlankLineBeforeStatementFixer::class, [
         'statements' => ['return', 'continue', 'break'],
     ])
+    // else/elseif/catch on the next line, as CrazyFactory ControlSignatureSniff requires
     ->withConfiguredRule(ControlStructureContinuationPositionFixer::class, [
         'position' => 'next_line',
     ])
