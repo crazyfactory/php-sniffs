@@ -50,7 +50,12 @@
     <!-- Disallow some function like var_dump -->
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
-            <property name="forbiddenFunctions" type="array" value="var_dump=>null,sizeof=>count,delete=>unset,print=>echo"/>
+            <property name="forbiddenFunctions" type="array">
+                <element key="var_dump" value="null"/>
+                <element key="sizeof" value="count"/>
+                <element key="delete" value="unset"/>
+                <element key="print" value="echo"/>
+            </property>
         </properties>
     </rule>
 </ruleset>

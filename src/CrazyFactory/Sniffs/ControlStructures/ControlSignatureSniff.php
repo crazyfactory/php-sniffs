@@ -1,4 +1,5 @@
 <?php
+
 namespace CrazyFactory\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Files\File;
@@ -16,7 +17,6 @@ class ControlSignatureSniff implements Sniff
         'PHP',
         'JS',
     ];
-
 
     /**
      * Returns an array of tokens this test wants to listen for.

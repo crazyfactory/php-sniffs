@@ -1,4 +1,5 @@
 <?php
+
 namespace CrazyFactory\Sniffs\Classes;
 
 use PHP_CodeSniffer\Files\File;
@@ -104,7 +105,7 @@ class UnusedUseStatementSniff implements Sniff
             );
 
             if (strcasecmp($namespace, $use_namespace) === 0) {
-                   $classUsed = false;
+                $classUsed = false;
             }
         }
 
@@ -136,14 +137,14 @@ class UnusedUseStatementSniff implements Sniff
                 if ($tokens[$beforeUsage]['code'] !== T_USE
                     && $tokens[$beforeUsage]['code'] !== T_NS_SEPARATOR
                 ) {
-                          return;
+                    return;
                 }
 
                 // Trait use statement within a class.
                 if ($tokens[$beforeUsage]['code'] === T_USE
                     && empty($tokens[$beforeUsage]['conditions']) === false
                 ) {
-                             return;
+                    return;
                 }
             }
 

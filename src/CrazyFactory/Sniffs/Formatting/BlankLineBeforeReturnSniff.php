@@ -1,4 +1,5 @@
 <?php
+
 namespace CrazyFactory\Sniffs\Formatting;
 
 use PHP_CodeSniffer\Files\File;
@@ -13,7 +14,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  */
 class BlankLineBeforeReturnSniff implements Sniff
 {
-
     /**
      * A list of tokenizers this sniff supports.
      *
@@ -101,6 +101,7 @@ class BlankLineBeforeReturnSniff implements Sniff
     {
         while ($current <= count($tokens) && $tokens[$current]['type'] !== 'T_RETURN') {
             $current++;
+
             continue;
         }
 
