@@ -14,17 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          tools: composer:v2
-
-      - name: Validate Composer configuration
-        run: composer validate --no-interaction
+      - name: Build Docker image
+        run: docker compose build
 
       - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
+        run: docker compose run --rm --user $(id -u) php-sniffs-cli composer install --no-interaction
+
+      - name: Validate Composer configuration
+        run: docker compose run --rm --user $(id -u) php-sniffs-cli composer validate --no-interaction
 
   deploy:
     needs: test
