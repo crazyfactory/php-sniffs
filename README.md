@@ -5,20 +5,23 @@ Crazy Factory default code styles to be used with Squizlabs' codesniffer and PHP
 
 ## Install
 
-1) Create a file `easy-coding-standard.neon` in the root path of project with at least below contents:
-```yml
-includes:
-  - vendor/crazyfactory/sniffs/easy-coding-standard.neon
+Run `composer require --dev crazyfactory/sniffs`
 
+Create a file `phpcs.xml` in the root path of project with at least below contents:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="CrazyFactory Default Coding Standard">
+    <config name="installed_paths" value="vendor/crazyfactory/sniffs/src" />
+
+    <rule ref="CrazyFactory" />
+</ruleset>
 ```
 
-2) Run `composer require-dev crazyfactory/sniffs`
-
-43 Add a linting command to `composer.json`
+Add a linting command to `composer.json`
 
 ```
   "scripts": {
-    "lint": "ecs check src cron tests --clear-cache",
-    "lint:fix": "ecs check src cron tests --clear-cache --fix"
+    "lint": "phpcs --standard=phpcs.xml",
+    "lint:fix": "phpcbf --standard=phpcs.xml"
   }
 ```

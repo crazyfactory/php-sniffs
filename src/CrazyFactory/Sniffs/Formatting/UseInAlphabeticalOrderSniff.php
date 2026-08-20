@@ -1,4 +1,5 @@
 <?php
+
 namespace CrazyFactory\Sniffs\Formatting;
 
 /**
@@ -24,7 +25,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  */
 class UseInAlphabeticalOrderSniff implements Sniff
 {
-
     /**
      * Processed files
      *
@@ -37,6 +37,7 @@ class UseInAlphabeticalOrderSniff implements Sniff
      * @var array
      */
     protected $uses = [];
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -46,6 +47,7 @@ class UseInAlphabeticalOrderSniff implements Sniff
     {
         return [T_USE];
     }
+
     /**
      * Processes this test, when one of its tokens is encountered.
      *

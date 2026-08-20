@@ -3,12 +3,8 @@
   "description": "Crazy Factory default code styles to be used with Squizlabs' code sniffer.",
   "license": "proprietary",
   "require": {
-    "PHP": "^8.2",
-    "symplify/easy-coding-standard": "^11.3"
-  },
-  "require-dev": {
-    "squizlabs/php_codesniffer": "^3.7",
-    "phpunit/phpunit": "^10.0"
+    "php": ">=7.1",
+    "squizlabs/php_codesniffer": "^3.13.6"
   },
   "autoload": {
     "psr-4": {
