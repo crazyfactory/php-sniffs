@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+    tags: ['*']
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Validate Composer configuration
+        run: composer validate --no-interaction
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+  deploy:
+    needs: test
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy to Gemfury
+        env:
+          GEMFURY_USER: ${{ secrets.GEMFURY_USER }}
+          GEMFURY_PASSWORD: ${{ secrets.GEMFURY_PASSWORD }}
+          GEMFURY_REPO_SLUG: ${{ secrets.GEMFURY_REPO_SLUG }}
+        run: bash scripts/deploy.sh
