@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+    tags: ['*']
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker compose build
+
+      - name: Install dependencies
+        run: docker compose run --rm --user $(id -u) php-sniffs-cli composer install --no-interaction
+
+      - name: Validate Composer configuration
+        run: docker compose run --rm --user $(id -u) php-sniffs-cli composer validate --no-interaction
+
+  deploy:
+    needs: test
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy to Gemfury
+        env:
+          GEMFURY_USER: ${{ secrets.GEMFURY_USER }}
+          GEMFURY_PASSWORD: ${{ secrets.GEMFURY_PASSWORD }}
+          GEMFURY_REPO_SLUG: ${{ secrets.GEMFURY_REPO_SLUG }}
+        run: bash scripts/deploy.sh

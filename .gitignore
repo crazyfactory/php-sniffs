@@ -13,9 +13,7 @@
 *.local.php
 *.local.ini
 *.env
-composer.lock
 
 # packages
 vendor/
 node_modules/
-
